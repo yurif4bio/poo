@@ -1,90 +1,91 @@
-//QUESTAO-01
+// class Animal {
+//     nome: String
+//     tutor: String
+//     idade: Number
+//     tipo: String
 
-class estudante {
-    matricula: Number
-    nome: String
-    curso: String
-    ira: Number
-    periodo: Number
+//     constructor(nm: String, tt: String, idd: Number, tp: String) {
+//         this.nome = nm
+//         this.tutor = tt
+//         this.idade = idd
+//         this.tipo = tp
+//     }
+// }
 
-    constructor (mat:Number, nm: String, crs: String, ira: Number, prd: Number ) {
-        this.matricula = mat
+// let krypto = new Animal('Krypto','Clark Kent',33,'canino');
+
+// class Consulta {
+//     private data: String
+//     private animal: String
+//     private preco: Number
+//     private receita: String
+
+//     constructor (dt: String, anml: String, prc: Number, rect: String) {
+//         this.data = dt
+//         this.animal = anml 
+//         this.preco = prc
+//         this.receita = rect
+
+//     }
+// }
+
+// set(animal: String) {
+    
+//     if (this.animal= 'canino')
+
+// }
+
+
+// let rex = new Animal('Krypto','Clark Kent',33,'canino');
+// let java = new Animal('Krypto','Clark Kent',33,'canino');
+
+// console.log (rex, java)
+
+
+// correção
+
+enum TipoAnimal { CANINO = 'Canino', FELINO = 'Felino', AVE = 'Ave' }
+
+class Animal {
+    nome: string
+    tutor: string
+    idade: number
+    tipo: TipoAnimal
+
+    constructor(nm: string, tt: string, id: number) {
         this.nome = nm
-        this.curso = crs
-        this.ira = ira
-        if (prd >= 1 && prd <= 9) {
-            this.periodo = prd
-        }
-        else { this.periodo = 1 }
-
-    }
-
-
-
-
-}
-
-let aluno01 = new estudante(123, 'bruce', 'TSI', 78, 42);
-let aluno02 = new estudante(321, 'spok', 'engenharia', 89.5, 4);
-
-//QUESTAO-02
-
-class exemplar {
-    isbn: Number
-    titulo: String
-    cdd: Number
-    quantidade: Number
-
-    constructor(isbn: Number, ttl: String, cdd: Number, qtd: Number) {
-        this.isbn = isbn
-        this.titulo = ttl
-        this.cdd = cdd
-        this.quantidade = qtd
-
+        this.tutor = tt
+        this.idade = id
+        this.tipo = TipoAnimal.CANINO
     }
 }
+class Consulta {
+    private data: Date
+    private animal: Animal
+    private preco: number
+    private receita: string
 
-let livro01 = new exemplar (423524, 'eu, robô - asimov', 32423, 45);
-let livro02 = new exemplar (3123412, 'sapiens', 4232, 32);
-let livro03 = new exemplar (423524, 'neuromancer', 32423, 45);
-let livro04 = new exemplar (423524, 'o programador pragmático', 32423, 45);
-let livro05 = new exemplar (3123412, 'clean code', 4232, 32);
-
-//QUESTAO-03
-
-// Classe Biblioteca
-class Biblioteca {
-    // Atributo privado para armazenar os exemplares
-    private exemplares: Exemplar[] = [];
-
-    // Método para adicionar um exemplar
-    public adicionarExemplar(novoExemplar: Exemplar): void {
-        this.exemplares.push(novoExemplar);
+    constructor(an: Animal) {
+        this.data = new Date()
+        this.animal = an
+        this.preco = 150
+        this.receita = ''
     }
-
-    // Método para obter todos os exemplares cadastrados
-    public obterTodosExemplares(): Exemplar[] {
-        return this.exemplares;
+    setPreco(p: number) {
+        if (p >= 0) { this.preco = p }
     }
-
-    // Método para obter um exemplar pelo CDD
-    public obterExemplarPorCDD(cdd: number): Exemplar | undefined {
-        return this.exemplares.find(ex => ex.cdd === cdd);
+    getPreco(): number { return this.preco }
+    setReceita(r: string) {
+        if (r && r.length > 0) { this.receita = r }
     }
+    getReceita(): string { return this.receita }
 }
-
-// Criando instância da biblioteca
-let minhaBiblioteca = new Biblioteca();
-
-// Adicionando os exemplares
-minhaBiblioteca.adicionarExemplar(livro01);
-minhaBiblioteca.adicionarExemplar(livro02);
-minhaBiblioteca.adicionarExemplar(livro03);
-minhaBiblioteca.adicionarExemplar(livro04);
-minhaBiblioteca.adicionarExemplar(livro05);
-
-// Exemplo de uso: listar todos os exemplares
-console.log(minhaBiblioteca.obterTodosExemplares());
-
-// Exemplo de uso: buscar um exemplar pelo CDD
-console.log(minhaBiblioteca.obterExemplarPorCDD(4232));
+let meg = new Animal('Meg', 'João', 4)
+let bubu = new Animal('Bubu', 'Bruno', 9)
+bubu.tipo = TipoAnimal.FELINO
+let consulta1 = new Consulta(meg)
+let consulta2 = new Consulta(bubu)
+consulta2.setPreco(90)
+consulta2.setReceita('Atibiótico Tal de 12 em 12 horas')
+console.log(consulta1)
+console.log(consulta2)
