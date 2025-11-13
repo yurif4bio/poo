@@ -1,4 +1,3 @@
-import * as read from 'readline-sync';
 import { Situacao } from "./situacao";
 
 
@@ -11,16 +10,19 @@ export class Registro {
     private bimestre2Nota1: number;
     private bimestre2Nota2: number;
     private notaAvaliacaoFinal: number;
+    private _situacao: Situacao
+    private _mediafinal: number | undefined;
 
     constructor() {
-       this.aluno= '';
-    this.matricula= 0;
-    this.bimestre1Nota1= 0;
-    this.bimestre1Nota2= 0;
-    this.bimestre2Nota1= 0;
-    this.bimestre2Nota2= 0;
-    this.notaAvaliacaoFinal= 0;
-
+        this.aluno = '';
+        this.matricula = 0;
+        this.bimestre1Nota1 = 0;
+        this.bimestre1Nota2 = 0;
+        this.bimestre2Nota1 = 0;
+        this.bimestre2Nota2 = 0;
+        this.notaAvaliacaoFinal = 0;
+        this._situacao = Situacao.cursando
+        this._mediafinal = undefined
     }
 
 
@@ -52,36 +54,33 @@ export class Registro {
 
 
     get mediaParcial() {
+        let mp = undefined
         if (this.mediab1 != undefined && this.mediab2 != undefined) {
-            return ((this.mediab1 * 2) + this.mediab2 * 3) / 5;
-        }
+            mp = ((this.mediab1 * 2) + this.mediab2 * 3) / 5;
 
-        return undefined;
-    }
-
-
-    get situacao(): Situacao {
-        if (this.mediaParcial != undefined) {
-            if (this.mediaParcial >= 60) {
-                return Situacao.aprovado;
-            }
-
-            if (this.mediaParcial < 10) {
-                return Situacao.reprovado;
-            }
-
-            if (this.mediaParcial >= 10) {
-                return Situacao.provaFinal;
+            if (mp < 10) {
+                this._situacao = Situacao.reprovado
+            } else if (mp < 60) {
+                this._situacao = Situacao.provaFinal
+            } else if (mp >= 60) {
+                this._situacao = Situacao.aprovado
             }
         }
 
-        return Situacao.cursando;
+        return mp;
+    }
+
+
 
     }
 
-    registrarSituacao(sit:String): String {
-        
-    }
+
+   
+
+
+
+
+
 
 
 }

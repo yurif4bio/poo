@@ -9,14 +9,21 @@ class Diario {
     codDaTurma;
     quantidadeDeAulas;
     registroDeNotas;
-    constructor(disciplina, professor, turno, curso, codTurma, qtdAulas, registro) {
+    constructor(disciplina, professor, turno, curso, codTurma, qtdAulas) {
         this.disciplina = disciplina;
         this.professor = professor;
         this.turno = turno;
         this.curso = curso;
         this.codDaTurma = codTurma;
         this.quantidadeDeAulas = qtdAulas;
-        this.registroDeNotas = registro;
+        this.registroDeNotas = [];
+    }
+    adicionarRegistro(reg) {
+        if (reg) {
+            this.registroDeNotas.push(reg);
+            return true;
+        }
+        return false;
     }
 }
 exports.Diario = Diario;

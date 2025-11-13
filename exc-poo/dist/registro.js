@@ -10,6 +10,8 @@ class Registro {
     bimestre2Nota1;
     bimestre2Nota2;
     notaAvaliacaoFinal;
+    _situacao;
+    _mediafinal;
     constructor() {
         this.aluno = '';
         this.matricula = 0;
@@ -18,6 +20,8 @@ class Registro {
         this.bimestre2Nota1 = 0;
         this.bimestre2Nota2 = 0;
         this.notaAvaliacaoFinal = 0;
+        this._situacao = situacao_1.Situacao.cursando;
+        this._mediafinal = undefined;
     }
     //calcular media de cada bimedstre
     get mediab1() {
@@ -37,26 +41,20 @@ class Registro {
         return undefined;
     }
     get mediaParcial() {
+        let mp = undefined;
         if (this.mediab1 != undefined && this.mediab2 != undefined) {
-            return ((this.mediab1 * 2) + this.mediab2 * 3) / 5;
-        }
-        return undefined;
-    }
-    get situacao() {
-        if (this.mediaParcial != undefined) {
-            if (this.mediaParcial >= 60) {
-                return situacao_1.Situacao.aprovado;
+            mp = ((this.mediab1 * 2) + this.mediab2 * 3) / 5;
+            if (mp < 10) {
+                this._situacao = situacao_1.Situacao.reprovado;
             }
-            if (this.mediaParcial < 10) {
-                return situacao_1.Situacao.reprovado;
+            else if (mp < 60) {
+                this._situacao = situacao_1.Situacao.provaFinal;
             }
-            if (this.mediaParcial >= 10) {
-                return situacao_1.Situacao.provaFinal;
+            else if (mp >= 60) {
+                this._situacao = situacao_1.Situacao.aprovado;
             }
         }
-        return situacao_1.Situacao.cursando;
-    }
-    registrarSituacao(sit) {
+        return mp;
     }
 }
 exports.Registro = Registro;

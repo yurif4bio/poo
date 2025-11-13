@@ -1,4 +1,4 @@
-import registro = require("./registro");
+import { Registro } from "./registro";
 export declare class Diario {
     disciplina: string;
     professor: string;
@@ -6,7 +6,8 @@ export declare class Diario {
     curso: string;
     codDaTurma: number;
     quantidadeDeAulas: number;
-    registroDeNotas: registro.Registro[];
-    constructor(disciplina: string, professor: string, turno: string, curso: string, codTurma: number, qtdAulas: number, registro: Registro[]);
+    registroDeNotas: Registro[];
+    constructor(disciplina: string, professor: string, turno: string, curso: string, codTurma: number, qtdAulas: number);
+    adicionarRegistro(reg: Registro): boolean;
 }
 //# sourceMappingURL=diario.d.ts.map
