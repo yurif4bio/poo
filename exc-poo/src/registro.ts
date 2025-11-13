@@ -53,34 +53,51 @@ export class Registro {
     }
 
 
-    get mediaParcial() {
-        let mp = undefined
-        if (this.mediab1 != undefined && this.mediab2 != undefined) {
-            mp = ((this.mediab1 * 2) + this.mediab2 * 3) / 5;
+   get mediaParcial() {
+    if (this.mediab1 != undefined && this.mediab2 != undefined) {
+        const mp = ((this.mediab1 * 2) + this.mediab2 * 3) / 5;
 
-            if (mp < 10) {
-                this._situacao = Situacao.reprovado
-            } else if (mp < 60) {
-                this._situacao = Situacao.provaFinal
-            } else if (mp >= 60) {
-                this._situacao = Situacao.aprovado
-            }
+        // Situações iniciais baseadas na média parcial
+        if (mp < 10) {
+            this._situacao = Situacao.reprovado;
+            this._mediafinal = mp;
+        } else if (mp >= 60) {
+            this._situacao = Situacao.aprovado;
+            this._mediafinal = mp;
+        } else {
+            this._situacao = Situacao.provaFinal; // 10 <= mp < 60
+            this._mediafinal = undefined; // aguarda prova final
         }
 
         return mp;
     }
 
+    return undefined;
+}
+
+get provaFinal() {
+    // Só calcula se estiver em prova final
+    if (this._situacao === Situacao.provaFinal) {
+        const mp = this.mediaParcial;
+        const naf = this.notaAvaliacaoFinal;
+
+        if (mp !== undefined && naf >= 0 && naf <= 100) {
+            const mf = (naf + mp) / 2;
+            this._mediafinal = mf;
+
+            if (mf >= 60) {
+                this._situacao = Situacao.aprovado;
+            } else {
+                this._situacao = Situacao.reprovado;
+            }
+
+            return mf;
+        }
+    }
+
+    return this._mediafinal;
+}
 
 
     }
 
-
-   
-
-
-
-
-
-
-
-}
